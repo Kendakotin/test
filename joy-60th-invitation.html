@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joy@60th Celebration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Dancing+Script:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #fce4ec 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .invitation-card {
+            background: rgba(255, 255, 255, 0.95);
+            max-width: 600px;
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.3);
+            padding: 60px 40px;
+            position: relative;
+            animation: fadeIn 1s ease-in;
+            border: 2px solid rgba(255, 182, 193, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floral-corner {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            opacity: 0.6;
+        }
+
+        .floral-top-left {
+            top: -10px;
+            left: -10px;
+            background: radial-gradient(circle at 30% 30%, #ff4081 0%, #f48fb1 50%, transparent 70%);
+            border-radius: 0 0 100% 0;
+        }
+
+        .floral-top-right {
+            top: -10px;
+            right: -10px;
+            background: radial-gradient(circle at 70% 30%, #ff4081 0%, #f48fb1 50%, transparent 70%);
+            border-radius: 0 0 0 100%;
+        }
+
+        .floral-bottom-left {
+            bottom: -10px;
+            left: -10px;
+            background: radial-gradient(circle at 30% 70%, #ff4081 0%, #f48fb1 50%, transparent 70%);
+            border-radius: 0 100% 0 0;
+        }
+
+        .floral-bottom-right {
+            bottom: -10px;
+            right: -10px;
+            background: radial-gradient(circle at 70% 70%, #ff4081 0%, #f48fb1 50%, transparent 70%);
+            border-radius: 100% 0 0 0;
+        }
+
+        .flower {
+            position: absolute;
+            animation: bloom 2s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes bloom {
+            0% {
+                transform: scale(0.8) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8) rotate(360deg);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(5deg);
+            }
+        }
+
+        .flower-1 {
+            top: 40px;
+            left: 20px;
+            font-size: 40px;
+            animation-delay: 0s;
+        }
+
+        .flower-2 {
+            top: 40px;
+            right: 20px;
+            font-size: 40px;
+            animation-delay: 0.5s;
+        }
+
+        .flower-3 {
+            bottom: 40px;
+            left: 30px;
+            font-size: 35px;
+            animation-delay: 1s;
+        }
+
+        .flower-4 {
+            bottom: 40px;
+            right: 30px;
+            font-size: 35px;
+            animation-delay: 1.5s;
+        }
+
+        .flower-5 {
+            top: 50%;
+            left: 10px;
+            font-size: 30px;
+            animation-delay: 0.3s;
+        }
+
+        .flower-6 {
+            top: 50%;
+            right: 10px;
+            font-size: 30px;
+            animation-delay: 0.8s;
+        }
+
+        .flower-7 {
+            top: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 25px;
+            animation-delay: 1.2s;
+        }
+
+        .flower-8 {
+            bottom: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 25px;
+            animation-delay: 1.8s;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .you-are-invited {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: #c2185b;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .event-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 82px;
+            color: #d81b60;
+            font-weight: 400;
+            margin: 20px 0;
+            text-shadow: 3px 3px 6px rgba(233, 30, 99, 0.3);
+            animation: titlePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            color: #f06292;
+            font-weight: 700;
+        }
+
+        .divider {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff4081, transparent);
+            margin: 30px auto;
+        }
+
+        .details {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-item {
+            margin: 25px 0;
+        }
+
+        .detail-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: #c2185b;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 19px;
+            color: #880e4f;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .icon {
+            display: inline-block;
+            margin-right: 8px;
+            color: #ff4081;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: #d81b60;
+            font-weight: 700;
+        }
+
+        .hearts {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #ff4081;
+        }
+
+        @media (max-width: 600px) {
+            .invitation-card {
+                padding: 40px 30px;
+            }
+
+            .event-title {
+                font-size: 64px;
+            }
+
+            .you-are-invited {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 26px;
+            }
+
+            .flower {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-card">
+        <div class="floral-corner floral-top-left"></div>
+        <div class="floral-corner floral-top-right"></div>
+        <div class="floral-corner floral-bottom-left"></div>
+        <div class="floral-corner floral-bottom-right"></div>
+        
+        <div class="flower flower-1">🌸</div>
+        <div class="flower flower-2">🌺</div>
+        <div class="flower flower-3">🌷</div>
+        <div class="flower flower-4">🌹</div>
+        <div class="flower flower-5">🌼</div>
+        <div class="flower flower-6">💐</div>
+        <div class="flower flower-7">🌻</div>
+        <div class="flower flower-8">🏵️</div>
+
+        <div class="header">
+            <div class="you-are-invited">You Are Invited To</div>
+            <div class="event-title">Joy@60th</div>
+            <div class="subtitle">A Celebration of Life & Love</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="details">
+            <div class="detail-item">
+                <div class="detail-label">
+                    <span class="icon">📅</span> Date & Time
+                </div>
+                <div class="detail-value">
+                    December 29, 2025<br>
+                    6:00 PM
+                </div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label">
+                    <span class="icon">📍</span> Location
+                </div>
+                <div class="detail-value">
+                    Tinago, Glamping
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="footer">
+            <div class="hearts">💕 ✨ 💕</div>
+            <div class="footer-text">
+                Join us for an evening of joy,<br>
+                laughter, and beautiful memories
+            </div>
+        </div>
+    </div>
+</body>
+</html>

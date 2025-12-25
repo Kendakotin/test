@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - Joy@60th Celebration</title>
+    <meta name="description" content="Complete event details for Joy's 60th birthday celebration at TInago Glamping">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <style>
+        :root {
+            --blush-rose: #F8E8E8;
+            --dusty-pink: #E8C4C4;
+            --champagne-gold: #F4E4BC;
+            --sage-green: #A8C4A2;
+            --cream-white: #FEFCF3;
+            --mauve: #D4A5A5;
+            --soft-coral: #F2C2A2;
+            --pearl-gray: #F5F5F5;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--cream-white) 0%, var(--blush-rose) 100%);
+            min-height: 100vh;
+        }
+        
+        .floral-pattern {
+            background: url('resources/floral-pattern.jpg') repeat;
+            opacity: 0.05;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .dancing {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--dusty-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--dusty-pink) 0%, var(--mauve) 100%);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--dusty-pink) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 165, 165, 0.4);
+        }
+        
+        .detail-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(212, 165, 165, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .detail-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(212, 165, 165, 0.2);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--dusty-pink);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--dusty-pink);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: linear-gradient(to bottom, var(--dusty-pink), transparent);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--dusty-pink);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid rgba(212, 165, 165, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            color: var(--mauve);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-answer.open {
+            max-height: 200px;
+        }
+        
+        .venue-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .venue-image {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .venue-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(212, 165, 165, 0.3);
+        }
+        
+        .contact-info {
+            background: linear-gradient(135deg, var(--blush-rose) 0%, var(--cream-white) 100%);
+            border: 1px solid rgba(212, 165, 165, 0.3);
+        }
+        
+        .map-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid rgba(212, 165, 165, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floral Pattern Background -->
+    <div class="floral-pattern"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-pink-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="playfair text-2xl font-bold text-gradient">Joy@60th</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Home</a>
+                    <a href="rsvp.html" class="nav-link text-gray-700 hover:text-pink-600 font-medium">RSVP</a>
+                    <a href="gallery.html" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Gallery</a>
+                    <a href="details.html" class="nav-link text-pink-600 font-medium">Details</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-pink-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Header Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-r from-pink-50 to-rose-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="playfair text-5xl md:text-6xl font-bold text-gradient mb-6">
+                Event Details
+            </h1>
+            <p class="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                Everything you need to know about Joy's 60th birthday celebration, 
+                from venue information to the evening's schedule.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Event Overview -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="detail-card rounded-2xl p-8 text-center">
+                    <div class="w-16 h-16 bg-pink-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="playfair text-2xl font-semibold mb-4 text-gray-800">Date & Time</h3>
+                    <p class="text-gray-600 mb-2"><strong>December 29, 2025</strong></p>
+                    <p class="text-gray-600 mb-2">6:30 PM - Evening Celebration</p>
+                    <p class="text-gray-600">Please arrive by 6:15 PM</p>
+                </div>
+                
+                <div class="detail-card rounded-2xl p-8 text-center">
+                    <div class="w-16 h-16 bg-rose-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="playfair text-2xl font-semibold mb-4 text-gray-800">Location</h3>
+                    <p class="text-gray-600 mb-2"><strong>TInago Glamping</strong></p>
+                    <p class="text-gray-600 mb-2">Luxury Outdoor Experience</p>
+                    <p class="text-gray-600">123 Celebration Lane, Nature Valley</p>
+                </div>
+                
+                <div class="detail-card rounded-2xl p-8 text-center">
+                    <div class="w-16 h-16 bg-pink-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    <h3 class="playfair text-2xl font-semibold mb-4 text-gray-800">Dress Code</h3>
+                    <p class="text-gray-600 mb-2"><strong>Elegant Casual</strong></p>
+                    <p class="text-gray-600 mb-2">Comfortable yet sophisticated</p>
+                    <p class="text-gray-600">Think garden party elegance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Schedule Timeline -->
+    <section class="py-16 bg-gradient-to-br from-rose-50 to-pink-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="playfair text-4xl font-bold text-center text-gradient mb-12">
+                Evening Schedule
+            </h2>
+            <div class="detail-card rounded-2xl p-8">
+                <div class="space-y-8">
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-gray-800">Welcome Reception</h3>
+                            <span class="text-pink-600 font-medium">6:30 PM</span>
+                        </div>
+                        <p class="text-gray-600">Guests arrive, welcome drinks, and mingling under the stars</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-gray-800">Dinner Service</h3>
+                            <span class="text-pink-600 font-medium">7:30 PM</span>
+                        </div>
+                        <p class="text-gray-600">Elegant three-course dinner featuring seasonal specialties</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-gray-800">Toasts & Tributes</h3>
+                            <span class="text-pink-600 font-medium">8:30 PM</span>
+                        </div>
+                        <p class="text-gray-600">Heartfelt toasts from family and friends celebrating Joy's life</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-gray-800">Dancing & Celebration</h3>
+                            <span class="text-pink-600 font-medium">9:30 PM</span>
+                        </div>
+                        <p class="text-gray-600">Music, dancing, and continued celebration under the glamping lights</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-gray-800">Evening Conclusion</h3>
+                            <span class="text-pink-600 font-medium">11:30 PM</span>
+                        </div>
+                        <p class="text-gray-600">Farewell wishes and safe travels home</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Venue Information -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="playfair text-4xl font-bold text-center text-gradient mb-12">
+                Venue Information
+            </h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12 mb-12">
+                <div>
+                    <h3 class="playfair text-3xl font-semibold mb-6 text-gray-800">TInago Glamping</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Experience luxury outdoor living at its finest. TInago Glamping offers a unique blend of 
+                        nature and comfort, providing the perfect setting for intimate celebrations. Our venue 
+                        features beautifully appointed safari tents, gourmet outdoor dining facilities, and 
+                        breathtaking natural surroundings.
+                    </p>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-pink-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-gray-700">Luxury safari tents with comfortable furnishings</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-pink-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-gray-700">Gourmet outdoor kitchen and dining area</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-pink-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-gray-700">Climate-controlled comfort in all weather</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-pink-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-gray-700">Scenic natural setting with privacy</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-pink-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-gray-700">Ample parking and accessibility features</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="venue-gallery">
+                    <div class="venue-image">
+                        <img src="https://kimi-web-img.moonshot.cn/img/sandypinescamping.com/6bd3c070b8c8d9c0249af81c29ea8a96fc7a257c.jpg" 
+                             alt="Luxury Glamping Tent" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="venue-image">
+                        <img src="https://kimi-web-img.moonshot.cn/img/boutiquecamping.com/411114edb268e1e2c8445b1e849eb1e0de87884a.jpg" 
+                             alt="Tent Interior" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="venue-image">
+                        <img src="https://kimi-web-img.moonshot.cn/img/www.marthastewart.com/13bf961922a7e4f93b384ce4574c7f722f0a78a4.jpg" 
+                             alt="Outdoor Dining" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="venue-image">
+                        <img src="resources/glamping-venue.jpg" 
+                             alt="Venue Setup" class="w-full h-48 object-cover">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Location & Directions -->
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="playfair text-3xl font-semibold mb-6 text-gray-800">Location & Directions</h3>
+                    <div class="detail-card rounded-2xl p-6 mb-6">
+                        <h4 class="font-semibold text-gray-800 mb-4">Address</h4>
+                        <p class="text-gray-600 mb-4">
+                            TInago Glamping<br>
+                            123 Celebration Lane<br>
+                            Nature Valley, NV 12345
+                        </p>
+                        
+                        <h4 class="font-semibold text-gray-800 mb-4">Parking</h4>
+                        <p class="text-gray-600 mb-4">
+                            Complimentary valet parking will be available. The venue has ample parking 
+                            space with easy access to the celebration area.
+                        </p>
+                        
+                        <h4 class="font-semibold text-gray-800 mb-4">Transportation</h4>
+                        <p class="text-gray-600">
+                            Rideshare services are recommended for those planning to enjoy alcoholic beverages. 
+                            The venue is approximately 30 minutes from downtown.
+                        </p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="playfair text-3xl font-semibold mb-6 text-gray-800">Nearby Accommodations</h3>
+                    <div class="detail-card rounded-2xl p-6">
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Nature Valley Inn</h4>
+                                <p class="text-gray-600 text-sm">Boutique hotel with mountain views</p>
+                                <p class="text-gray-600 text-sm">15 minutes from venue</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Lakeside Resort</h4>
+                                <p class="text-gray-600 text-sm">Luxury resort with spa services</p>
+                                <p class="text-gray-600 text-sm">20 minutes from venue</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Garden View Hotel</h4>
+                                <p class="text-gray-600 text-sm">Charming hotel with garden setting</p>
+                                <p class="text-gray-600 text-sm">25 minutes from venue</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4">
+                            Special rates may be available for celebration guests. Contact hotels directly for availability.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-16 bg-gradient-to-br from-rose-50 to-pink-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="playfair text-4xl font-bold text-center text-gradient mb-12">
+                Frequently Asked Questions
+            </h2>
+            
+            <div class="detail-card rounded-2xl p-8">
+                <div class="space-y-6">
+                    <div class="faq-item pb-6">
+                        <div class="faq-question flex justify-between items-center" onclick="toggleFAQ(0)">
+                            <h3 class="text-lg font-semibold text-gray-800">What should I wear to the celebration?</h3>
+                            <svg class="w-5 h-5 text-pink-600 transform transition-transform" id="faq-icon-0">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-0">
+                            <p class="text-gray-600 mt-4">
+                                We recommend elegant casual attire. Think garden party chic - comfortable yet sophisticated. 
+                                Since the event is outdoors at a glamping venue, comfortable shoes are essential. 
+                                Layers are also recommended as the evening may get cool.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item pb-6">
+                        <div class="faq-question flex justify-between items-center" onclick="toggleFAQ(1)">
+                            <h3 class="text-lg font-semibold text-gray-800">Is there a gift registry?</h3>
+                            <svg class="w-5 h-5 text-pink-600 transform transition-transform" id="faq-icon-1">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-1">
+                            <p class="text-gray-600 mt-4">
+                                Your presence is the greatest gift! If you'd like to contribute something special, 
+                                we're collecting memories and photos for a commemorative album. You can also make a 
+                                donation to Joy's favorite charity in her honor.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item pb-6">
+                        <div class="faq-question flex justify-between items-center" onclick="toggleFAQ(2)">
+                            <h3 class="text-lg font-semibold text-gray-800">What if it rains?</h3>
+                            <svg class="w-5 h-5 text-pink-600 transform transition-transform" id="faq-icon-2">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-2">
+                            <p class="text-gray-600 mt-4">
+                                The glamping tents are fully weatherproof and climate-controlled. The celebration 
+                                will proceed rain or shine. In case of severe weather, we have indoor backup 
+                                facilities available at the same venue.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item pb-6">
+                        <div class="faq-question flex justify-between items-center" onclick="toggleFAQ(3)">
+                            <h3 class="text-lg font-semibold text-gray-800">Can I bring my children?</h3>
+                            <svg class="w-5 h-5 text-pink-600 transform transition-transform" id="faq-icon-3">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-3">
+                            <p class="text-gray-600 mt-4">
+                                This is an adults-only celebration. We appreciate your understanding as we create 
+                                an intimate evening for family and friends. We can recommend local childcare services 
+                                if needed.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question flex justify-between items-center" onclick="toggleFAQ(4)">
+                            <h3 class="text-lg font-semibold text-gray-800">Is dietary accommodation available?</h3>
+                            <svg class="w-5 h-5 text-pink-600 transform transition-transform" id="faq-icon-4">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-4">
+                            <p class="text-gray-600 mt-4">
+                                Yes! Please indicate any dietary restrictions or allergies in your RSVP. Our chef 
+                                can accommodate vegetarian, vegan, gluten-free, and other dietary needs with advance notice.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Information -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="playfair text-4xl font-bold text-center text-gradient mb-12">
+                Contact Information
+            </h2>
+            
+            <div class="contact-info rounded-2xl p-8 text-center">
+                <h3 class="playfair text-2xl font-semibold mb-6 text-gray-800">Questions or Special Requests?</h3>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Please don't hesitate to reach out if you have any questions about the celebration 
+                    or need any special accommodations.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-4">Event Coordinator</h4>
+                        <p class="text-gray-600 mb-2">Sarah Thompson</p>
+                        <p class="text-gray-600 mb-2">sarah@celebrationevents.com</p>
+                        <p class="text-gray-600">(555) 123-4567</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-4">Host Family</h4>
+                        <p class="text-gray-600 mb-2">The Johnson Family</p>
+                        <p class="text-gray-600 mb-2">joy60th@family.com</p>
+                        <p class="text-gray-600">(555) 987-6543</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-pink-100 to-rose-100 py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="playfair text-3xl font-bold text-gradient mb-4">Joy@60th</div>
+            <p class="text-gray-600 mb-6">A celebration of love, life, and six decades of wonderful memories</p>
+            <div class="border-t border-pink-200 pt-6">
+                <p class="text-gray-500 text-sm">
+                    © 2025 Joy's 60th Celebration. Created with love for this special milestone.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // FAQ Toggle functionality
+        function toggleFAQ(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            
+            // Close all other FAQs
+            document.querySelectorAll('.faq-answer').forEach((item, i) => {
+                if (i !== index) {
+                    item.classList.remove('open');
+                    document.getElementById(`faq-icon-${i}`).style.transform = 'rotate(0deg)';
+                }
+            });
+            
+            // Toggle current FAQ
+            if (answer.classList.contains('open')) {
+                answer.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                answer.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+        
+        // Initialize page animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate detail cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        
+                        if (element.classList.contains('detail-card')) {
+                            anime({
+                                targets: element,
+                                translateY: [50, 0],
+                                opacity: [0, 1],
+                                duration: 800,
+                                easing: 'easeOutCubic'
+                            });
+                        }
+                        
+                        if (element.classList.contains('timeline-item')) {
+                            anime({
+                                targets: element,
+                                translateX: [-30, 0],
+                                opacity: [0, 1],
+                                duration: 600,
+                                easing: 'easeOutCubic'
+                            });
+                        }
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements for scroll animations
+            document.querySelectorAll('.detail-card, .timeline-item').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Animate venue images
+            anime({
+                targets: '.venue-image',
+                scale: [0.9, 1],
+                opacity: [0, 1],
+                delay: anime.stagger(200, {start: 1000}),
+                duration: 600,
+                easing: 'easeOutCubic'
+            });
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

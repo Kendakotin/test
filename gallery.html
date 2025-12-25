@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Joy@60th Celebration</title>
+    <meta name="description" content="Photo gallery of memories and celebration preparations for Joy's 60th birthday">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <style>
+        :root {
+            --blush-rose: #F8E8E8;
+            --dusty-pink: #E8C4C4;
+            --champagne-gold: #F4E4BC;
+            --sage-green: #A8C4A2;
+            --cream-white: #FEFCF3;
+            --mauve: #D4A5A5;
+            --soft-coral: #F2C2A2;
+            --pearl-gray: #F5F5F5;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--cream-white) 0%, var(--blush-rose) 100%);
+            min-height: 100vh;
+        }
+        
+        .floral-pattern {
+            background: url('resources/floral-pattern.jpg') repeat;
+            opacity: 0.05;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .dancing {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--dusty-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--dusty-pink) 0%, var(--mauve) 100%);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--dusty-pink) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 165, 165, 0.4);
+        }
+        
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--mauve);
+            border: 1px solid var(--dusty-pink);
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: var(--dusty-pink);
+            color: white;
+        }
+        
+        .filter-btn:hover {
+            background: var(--dusty-pink);
+            color: white;
+        }
+        
+        .gallery-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(212, 165, 165, 0.3);
+        }
+        
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(212, 165, 165, 0.3);
+        }
+        
+        .gallery-image {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gallery-image img {
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-image img {
+            transform: scale(1.1);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--dusty-pink);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+        
+        .lightbox img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--dusty-pink);
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--mauve);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--dusty-pink);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--mauve);
+            background: rgba(212, 165, 165, 0.05);
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--mauve);
+            background: rgba(212, 165, 165, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floral Pattern Background -->
+    <div class="floral-pattern"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-pink-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="playfair text-2xl font-bold text-gradient">Joy@60th</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Home</a>
+                    <a href="rsvp.html" class="nav-link text-gray-700 hover:text-pink-600 font-medium">RSVP</a>
+                    <a href="gallery.html" class="nav-link text-pink-600 font-medium">Gallery</a>
+                    <a href="details.html" class="nav-link text-gray-700 hover:text-pink-600 font-medium">Details</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-pink-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Header Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-r from-pink-50 to-rose-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="playfair text-5xl md:text-6xl font-bold text-gradient mb-6">
+                Memories & Moments
+            </h1>
+            <p class="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                A collection of cherished memories, celebration preparations, and the beautiful moments 
+                that make Joy's 60th birthday celebration so special.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Gallery Filters -->
+    <section class="py-8 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="filter-btn active px-6 py-3 rounded-full font-medium" onclick="filterGallery('all')">
+                    All Photos
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full font-medium" onclick="filterGallery('memories')">
+                    Family Memories
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full font-medium" onclick="filterGallery('venue')">
+                    Venue & Setup
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full font-medium" onclick="filterGallery('decorations')">
+                    Decorations
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full font-medium" onclick="filterGallery('preparation')">
+                    Preparation
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Photo Gallery -->
+    <section class="py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="gallery-container rounded-2xl p-8">
+                <div id="photo-gallery" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Gallery items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Photo Upload Section -->
+    <section class="py-16 bg-gradient-to-br from-rose-50 to-pink-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="playfair text-4xl font-bold text-gradient mb-8">
+                Share Your Memories
+            </h2>
+            <p class="text-xl text-gray-600 mb-12 leading-relaxed">
+                Have a special memory with Joy you'd like to share? Upload your photos to be included in our celebration gallery.
+            </p>
+            
+            <div class="upload-area" id="upload-area">
+                <svg class="w-12 h-12 text-pink-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Drop photos here or click to browse</h3>
+                <p class="text-gray-600 mb-4">Supported formats: JPG, PNG, GIF (Max 5MB each)</p>
+                <input type="file" id="photo-upload" class="hidden" multiple accept="image/*">
+                <button type="button" onclick="document.getElementById('photo-upload').click()" 
+                        class="btn-primary px-8 py-3 rounded-full font-semibold">
+                    Choose Photos
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-content">
+            <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
+            <img id="lightbox-image" src="" alt="">
+            <div class="text-center mt-4">
+                <h3 id="lightbox-title" class="text-white text-xl font-semibold mb-2"></h3>
+                <p id="lightbox-description" class="text-gray-300"></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-pink-100 to-rose-100 py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="playfair text-3xl font-bold text-gradient mb-4">Joy@60th</div>
+            <p class="text-gray-600 mb-6">A celebration of love, life, and six decades of wonderful memories</p>
+            <div class="border-t border-pink-200 pt-6">
+                <p class="text-gray-500 text-sm">
+                    © 2025 Joy's 60th Celebration. Created with love for this special milestone.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Gallery data
+        const galleryImages = [
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/flairflowerbar.com/eb987cf0ab2908f499362d13f3583db2aaa59f95.png',
+                title: 'Elegant Floral Arrangements',
+                description: 'Beautiful pink roses and peonies arranged for the celebration',
+                category: 'decorations'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/sandypinescamping.com/6bd3c070b8c8d9c0249af81c29ea8a96fc7a257c.jpg',
+                title: 'Luxury Glamping Venue',
+                description: 'The stunning TInago glamping location ready for the celebration',
+                category: 'venue'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/www.sophistiplate.com/aef923c08b2571d9ef445ca616cdb71fae19e49c.jpg',
+                title: 'Elegant Table Settings',
+                description: 'Sophisticated table arrangements with pink and gold accents',
+                category: 'decorations'
+            },
+            {
+                src: 'resources/memory-collage.jpg',
+                title: 'Memory Collage',
+                description: 'A beautiful collection of memories celebrating Joy\\'s life',
+                category: 'memories'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/karaspartyideas.com/1c275f1180c4d0903e7c018e5b2464b2ae5b6cfe.jpg',
+                title: 'Celebration Setup',
+                description: 'The elegant party setup with sophisticated decorations',
+                category: 'decorations'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/laineandlayne.com/181667c5cf0aa35edd2a682908311cfd909799a2.jpg',
+                title: 'Vintage Photo Frames',
+                description: 'Charming vintage frames ready for displaying memories',
+                category: 'memories'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/boutiquecamping.com/411114edb268e1e2c8445b1e849eb1e0de87884a.jpg',
+                title: 'Luxury Tent Interior',
+                description: 'The beautifully decorated glamping tent interior',
+                category: 'venue'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/themixxery.com/e942b4c91516802c1e96e9d5b5d940b89ac6027a.jpg',
+                title: 'Elegant Party Venue',
+                description: 'The sophisticated venue setup for the milestone celebration',
+                category: 'venue'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/www.marthastewart.com/13bf961922a7e4f93b384ce4574c7f722f0a78a4.jpg',
+                title: 'Outdoor Celebration',
+                description: 'Beautiful outdoor setup for the evening celebration',
+                category: 'venue'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/karaspartyideas.com/1c275f1180c4d0903e7c018e5b2464b2ae5b6cfe.jpg',
+                title: 'Party Preparations',
+                description: 'Behind the scenes of the celebration preparations',
+                category: 'preparation'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/www.mydomaine.com/14eea1adb084adc72a5588e0176895ecc71f4706.jpeg',
+                title: 'Sophisticated Decor',
+                description: 'Elegant decorations in pink and gold color scheme',
+                category: 'decorations'
+            },
+            {
+                src: 'https://kimi-web-img.moonshot.cn/img/i.imgur.com/7d7810b1fe8de27009c84e758da8fa3afc271ab2.jpg',
+                title: 'Milestone Celebration',
+                description: 'Special decorations for this milestone birthday celebration',
+                category: 'decorations'
+            }
+        ];
+        
+        let currentFilter = 'all';
+        let currentLightboxIndex = 0;
+        
+        // Initialize gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            renderGallery(galleryImages);
+            initializeUploadArea();
+        });
+        
+        // Render gallery based on filter
+        function renderGallery(images) {
+            const gallery = document.getElementById('photo-gallery');
+            const filteredImages = currentFilter === 'all' ? images : images.filter(img => img.category === currentFilter);
+            
+            gallery.innerHTML = filteredImages.map((image, index) => `
+                <div class="gallery-item" onclick="openLightbox(${galleryImages.indexOf(image)})">
+                    <div class="gallery-image relative">
+                        <img src="${image.src}" alt="${image.title}" class="w-full h-64 object-cover">
+                        <div class="category-badge">${image.category}</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-800 mb-2">${image.title}</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">${image.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Animate gallery items
+            anime({
+                targets: '.gallery-item',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(100),
+                duration: 600,
+                easing: 'easeOutCubic'
+            });
+        }
+        
+        // Filter gallery
+        function filterGallery(category) {
+            currentFilter = category;
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Re-render gallery
+            renderGallery(galleryImages);
+        }
+        
+        // Open lightbox
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const image = galleryImages[index];
+            
+            document.getElementById('lightbox-image').src = image.src;
+            document.getElementById('lightbox-title').textContent = image.title;
+            document.getElementById('lightbox-description').textContent = image.description;
+            
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('active');
+            
+            // Animate lightbox
+            anime({
+                targets: '.lightbox-content',
+                scale: [0.8, 1],
+                opacity: [0, 1],
+                duration: 300,
+                easing: 'easeOutCubic'
+            });
+        }
+        
+        // Close lightbox
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            
+            anime({
+                targets: '.lightbox-content',
+                scale: [1, 0.8],
+                opacity: [1, 0],
+                duration: 300,
+                easing: 'easeInCubic',
+                complete: () => {
+                    lightbox.classList.remove('active');
+                }
+            });
+        }
+        
+        // Initialize upload area
+        function initializeUploadArea() {
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('photo-upload');
+            
+            // Drag and drop functionality
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                handleFileUpload(files);
+            });
+            
+            fileInput.addEventListener('change', function(e) {
+                handleFileUpload(e.target.files);
+            });
+        }
+        
+        // Handle file upload
+        function handleFileUpload(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024) {
+                    const reader = new File();
+                    reader.onload = function(e) {
+                        // Add uploaded image to gallery
+                        const newImage = {
+                            src: e.target.result,
+                            title: 'Guest Upload: ' + file.name,
+                            description: 'Shared by a guest for the celebration',
+                            category: 'memories'
+                        };
+                        
+                        galleryImages.unshift(newImage);
+                        renderGallery(galleryImages);
+                        
+                        // Show success message
+                        showNotification('Photo uploaded successfully!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    showNotification('Please upload valid image files under 5MB', 'error');
+                }
+            });
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg text-white z-50 ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 
+                'bg-blue-500'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            anime({
+                targets: notification,
+                translateX: [300, 0],
+                opacity: [0, 1],
+                duration: 500,
+                easing: 'easeOutCubic'
+            });
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                anime({
+                    targets: notification,
+                    translateX: [0, 300],
+                    opacity: [1, 0],
+                    duration: 500,
+                    easing: 'easeInCubic',
+                    complete: () => {
+                        notification.remove();
+                    }
+                });
+            }, 3000);
+        }
+        
+        // Close lightbox on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+        
+        // Close lightbox on background click
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
